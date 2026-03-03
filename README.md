@@ -1,117 +1,98 @@
-# 小智 AI MCP 客户端 (XiaoZhi MCP)
+# OpenClaw 详细安装指南
 
-🦞 基于 OpenClaw 的小智 AI MCP 客户端实现，支持多种运行模式。
+🦞 一份完整的 OpenClaw 安装和配置文档
 
-## 📁 文件说明
+---
 
-| 文件 | 说明 |
-|------|------|
-| `xiaozhi-client.js` | 基础版客户端 |
-| `xiaozhi-client-optimized.js` | 优化版（英文工具名，提高 LLM 识别率） |
-| `xiaozhi-client-persistent.js` | 长连接模式（支持心跳保活、上下文记忆） |
-| `xiaozhi-mcp-bridge.js` | MCP 桥接器（stdio ↔ WebSocket） |
-| `xiaozhi-monitor.sh` | 监控脚本 |
-| `xiaozhi-mcp.service` | systemd 服务配置 |
-| `scripts/start-qq.sh` | QQ 机器人启动脚本（NapCat） |
+## 📖 文档内容
 
-## 🔧 配置
+本指南包含：
 
-### 1. 获取小智 MCP Token
+- ✅ 系统要求和环境检查
+- ✅ 4 种安装方法（安装脚本、npm、源码、Docker）
+- ✅ 详细的配置向导说明
+- ✅ 聊天渠道配置（Telegram、WhatsApp、Discord 等）
+- ✅ 网关启动和管理
+- ✅ 安装验证步骤
+- ✅ 常见问题解决方案
+- ✅ 高级配置和优化建议
 
-1. 登录 [小智 AI 后台](https://api.xiaozhi.me)
-2. 进入 **开发者设置** → **MCP 端点**
-3. 复制你的 WebSocket 连接 URL（包含 token）
+---
 
-### 2. 配置环境变量
+## 📄 查看文档
 
-```bash
-# 复制示例配置
-cp .env.example .env
+- **[在线阅读](openclaw-install-guide.md)** - GitHub 直接查看
+- **[原始文件](https://raw.githubusercontent.com/yuexianga/openclaw-install-guide/master/openclaw-install-guide.md)** - 下载或 curl
 
-# 编辑 .env 文件，填入你的 token
-nano .env
-```
+---
 
-`.env` 文件内容示例：
-```bash
-XIAOZHI_MCP_URL=wss://api.xiaozhi.me/mcp/?token=YOUR_TOKEN_HERE
-CLAWPANEL_QQ_TOKEN=clawpanel-qq  # 可选，QQ 机器人用
-```
+## 🚀 快速开始
 
-### 3. 加载环境变量
+### 1. 安装 OpenClaw
 
 ```bash
-# 方法 1：临时加载（当前终端会话有效）
-export $(cat .env | xargs)
+# macOS / Linux / WSL2
+curl -fsSL https://openclaw.ai/install.sh | bash
 
-# 方法 2：使用 dotenv 包
-npm install dotenv
-
-# 方法 3：在 systemd 服务中配置（见 xiaozhi-mcp.service）
+# Windows (PowerShell)
+iwr -useb https://openclaw.ai/install.ps1 | iex
 ```
 
-## 🚀 运行
-
-### 基础客户端
-```bash
-export $(cat .env | xargs)
-node xiaozhi-client.js
-```
-
-### 优化版客户端
-```bash
-export $(cat .env | xargs)
-node xiaozhi-client-optimized.js
-```
-
-### 长连接模式（推荐）
-```bash
-export $(cat .env | xargs)
-node xiaozhi-client-persistent.js
-```
-
-### 使用 MCP 桥接器
-```bash
-export $(cat .env | xargs)
-node xiaozhi-mcp-bridge.js
-```
-
-## 🔧 systemd 服务（开机自启）
+### 2. 运行配置向导
 
 ```bash
-# 1. 编辑服务文件，设置环境变量
-sudo nano /etc/systemd/system/xiaozhi-mcp.service
-
-# 2. 重新加载 systemd
-sudo systemctl daemon-reload
-
-# 3. 启动服务
-sudo systemctl start xiaozhi-mcp
-
-# 4. 设置开机自启
-sudo systemctl enable xiaozhi-mcp
-
-# 5. 查看状态
-sudo systemctl status xiaozhi-mcp
+openclaw onboard --install-daemon
 ```
 
-## 📱 QQ 机器人（可选）
+### 3. 打开控制面板
 
 ```bash
-# 启动 NapCat QQ
-./scripts/start-qq.sh
-
-# 访问 WebUI 配置
-# http://127.0.0.1:6099
-# Token: clawpanel-qq (或你在 .env 中配置的值)
+openclaw dashboard
 ```
 
-## ⚠️ 安全提示
+详细步骤请查看 [完整安装指南](openclaw-install-guide.md)
 
-- **切勿提交 `.env` 文件到 Git！** 已添加到 `.gitignore`
-- Token 泄露请立即在小智后台重置
-- 生产环境建议使用系统环境变量或密钥管理服务
+---
 
-## 📄 License
+## 📋 目录结构
 
-MIT
+```
+openclaw-install-guide/
+├── README.md                      # 本文件
+└── openclaw-install-guide.md      # 详细安装指南
+```
+
+---
+
+## 🔗 相关链接
+
+- **OpenClaw 官方文档**: https://docs.openclaw.ai
+- **OpenClaw GitHub**: https://github.com/openclaw/openclaw
+- **Discord 社区**: https://discord.com/invite/clawd
+- **安装脚本**: https://openclaw.ai/install.sh
+
+---
+
+## 📝 更新日志
+
+- **v1.0** (2026-03-03) - 初始版本
+  - 完整的安装流程说明
+  - 4 种安装方法详解
+  - 常见问题解决方案
+  - 高级配置指南
+
+---
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request 改进这份文档！
+
+---
+
+## 📄 许可证
+
+MIT License
+
+---
+
+*最后更新：2026 年 3 月 3 日*
